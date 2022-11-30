@@ -7,6 +7,15 @@ import androidx.room.RoomDatabase
 import com.peculiaruc.alc_mmsystem_mentor.data.local.dao.TaskDao
 import com.peculiaruc.alc_mmsystem_mentor.data.local.models.Task
 
+/**
+ * A room [MentorDatabase] database class.
+ *
+ * This class defines the room database instance.
+ *
+ * @property taskDao task data access object
+ * @author Ibu Eric
+ */
+
 @Database(entities = [Task::class], version = 1, exportSchema = false)
 abstract class MentorDatabase: RoomDatabase() {
     abstract fun taskDao(): TaskDao
