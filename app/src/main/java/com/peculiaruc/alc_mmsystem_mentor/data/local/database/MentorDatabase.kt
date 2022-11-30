@@ -13,7 +13,7 @@ import com.peculiaruc.alc_mmsystem_mentor.data.local.models.Task
  * This class defines the room database instance.
  *
  * @property taskDao task data access object
- * @author Ibu Eric
+ *
  */
 
 @Database(entities = [Task::class], version = 1, exportSchema = false)

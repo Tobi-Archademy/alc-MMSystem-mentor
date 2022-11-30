@@ -13,19 +13,27 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
-    //Get all tasks
-    @Query("SELECT * from task")
-    fun getTasks() : Flow<List<Task>>
+    /**
+     * Gets one or more tasks using the id
+     */
+    @Query("SELECT * from task WHERE id = :id")
+    fun getTasks(id: Int) : Flow<Task>
 
-    //add a task
+    /**
+     * Inserts a new tasks to the db.
+     */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTask(task: Task)
 
-    //update a task
+    /**
+     * Used to update the tasks schema.
+     */
     @Update
     suspend fun updateTask(task: Task)
 
-    //delete a tasks
+    /**
+     * Used to delete a task from the db.
+     */
     @Delete
     suspend fun deleteTask(task: Task)
 
