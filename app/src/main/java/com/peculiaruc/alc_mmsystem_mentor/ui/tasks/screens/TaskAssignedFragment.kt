@@ -6,112 +6,39 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.peculiaruc.alc_mmsystem_mentor.R
 import com.peculiaruc.alc_mmsystem_mentor.data.local.models.Task
+import com.peculiaruc.alc_mmsystem_mentor.data.local.models.util.TaskList
 
-
-private const val tempName: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit anet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattias tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. Curabitur pellentesue nibh nigh"
 /**
- * A [Fragment] that displays the tasks assigning screen.
+ * A Fragment [TaskAssignedFragment] class.
  *
- *
- *
+ * @property tasks
  */
+
 class TaskAssignedFragment : Fragment() {
 
     var tasks: ArrayList<Task> = arrayListOf()
-
-    private val taskOne = Task(
-        1,
-        "Write Documentation for Auth",
-        tempName,
-        false,
-        false,
-        0
-    )
-    private val taskTwo = Task(
-        2,
-        "Implement Dependency Injection",
-        tempName,
-        true,
-        false,
-        3
-    )
-    private val taskThree = Task(
-        3,
-        "Fetch API endpoint for all tasks",
-        tempName,
-        false,
-        true,
-        4
-    )
-    private val taskFour = Task(
-        4,
-        "Implement local caching",
-        tempName,
-        true,
-        false,
-        3
-    )
-    private val taskFive = Task(
-        5,
-        "Create Database",
-        tempName,
-        false,
-        false,
-        5
-    )
-    private val taskSix = Task(
-        6,
-        "Implement Navigation Graph",
-        tempName,
-        false,
-        true,
-        5
-    )
-    private val taskSeven = Task(
-        7,
-        "Liaise with Backend on the Settings endpoints",
-        tempName,
-        false,
-        false,
-        1
-    )
-    private val taskEight = Task(
-        8,
-        "Implement Firestore caching",
-        tempName,
-        true,
-        false,
-        3
-    )
-    private val taskNine = Task(
-        9,
-        "Implement UI for Chat function",
-        tempName,
-        true,
-        false,
-        3
-    )
-    private val taskTen = Task(
-        10,
-        "Implement Internationalization",
-        tempName,
-        false,
-        true,
-        4
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_task_assigned, container, false)
+        val allTasks = TaskList(requireContext()).getAllTasks()
+        tasks.addAll(allTasks)
+        val view = inflater.inflate(R.layout.fragment_task_assigned, container, false)
         val btn = view.findViewById<Button>(R.id.button2)
+        val textViewTitle = view.findViewById<TextView>(R.id.textView4)
+        val textViewDesc= view.findViewById<TextView>(R.id.textView5)
+
+        val id = arguments?.getInt("id")
+            textViewTitle.text = tasks[id!!].title
+            textViewDesc.text = tasks[id].desc
 
         btn.setOnClickListener {
             findNavController().navigate(R.id.action_taskAssignedFragment_to_taskFragment)
@@ -125,20 +52,15 @@ class TaskAssignedFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val bundle = arguments
-//        if (bundle != null) {
-//            Log.e("TaskAssignedFragment", "Fragment received information")
-//            val args = TaskAssignedFragmentArgs.fromBundle(bundle)
-//            val id = args.id
-//            for (i in tasks.indices) {
-//                if (tasks.get(i).id == id) {
-//                    var tv = view.findViewById<TextView>(R.id.textView4)
-//                    tv?.text = tasks.get(i).title
-//                    view.findViewById<TextView>(R.id.textView5)?.text = tasks.get(i).desc
-//                }
-//            }
-//        }
+    companion object {
+        @JvmStatic
+        fun newInstance(position: Int) = TaskAssignedFragment().apply {
+            val fragment = TaskAssignedFragment()
+            val args = Bundle().apply {
+                putInt("id", position)
+            }
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

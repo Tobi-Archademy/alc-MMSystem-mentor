@@ -1,7 +1,6 @@
 package com.peculiaruc.alc_mmsystem_mentor.data.local.database
 
 import android.content.Context
-import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -9,25 +8,20 @@ import com.peculiaruc.alc_mmsystem_mentor.data.local.dao.TaskDao
 import com.peculiaruc.alc_mmsystem_mentor.data.local.models.Task
 
 /**
- * A [Database] schema that is used to cache locally, the mentor tasks data.
+ * A room [MentorDatabase] database class.
  *
- * It implements the getDatabase method.
+ * This class defines the room database instance.
+ *
+ * @property taskDao task data access object
  *
  */
+
 @Database(entities = [Task::class], version = 1, exportSchema = false)
 abstract class MentorDatabase: RoomDatabase() {
-
-    /**
-     * Creates an instance of the taskDao interface.
-     */
     abstract fun taskDao(): TaskDao
     companion object {
         @Volatile
         private var INSTANCE: MentorDatabase? = null
-
-        /**
-         * It is used to fetch cached data on the database.
-         */
         fun getDatabase(context: Context): MentorDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(

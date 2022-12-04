@@ -5,10 +5,10 @@ import com.peculiaruc.alc_mmsystem_mentor.data.local.models.Task
 import kotlinx.coroutines.flow.Flow
 
 /**
- * A [Dao] object that interacts with tasks database.
+ * TaskDao [TaskDao] interface
  *
- * It implements the getTasks, insertTasks, updateTasks and deleteTasks suspend methods.
- *
+ * Defines access methods and queries for room database
+ * @author Eric Ibu
  */
 @Dao
 interface TaskDao {
